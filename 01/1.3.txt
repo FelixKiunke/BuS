@@ -1,0 +1,9 @@
+a)
+sed 's/5/6/'
+
+b)
+Gibt für jede Datei im aktuellen Verzeichnis, die mit einem kleinen d beginnt,
+jeweils zeilenweise alle Zeichen vor dem ersten Leerzeichen aus.
+
+c)
+grep -E '^[[:digit:]]{5} \w+( \w+)?$' -B 2 emails
