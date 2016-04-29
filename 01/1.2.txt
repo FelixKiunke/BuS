@@ -1,0 +1,7 @@
+a) (Von-Neumann-Flaschenhals)
+
+b) (Systemaufrufe)
+
+c) (Polling)
+
+d) (Multiprozess)
