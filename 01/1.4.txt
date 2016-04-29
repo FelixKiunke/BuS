@@ -1,0 +1,12 @@
+a) (Syscalls)
+
+b)
+- exec
+- stat
+- ioctl
+- mmap
+- brk
+
+c) (strace)
+
+d) (strace ls)
