@@ -1,12 +1,26 @@
-a) (Syscalls)
+a)
+Ein Syscall ist der von einem Anwendungsprogramm erzeugte Aufruf von vom Betriebssystem bereitgestellten Methoden zum Ansprechen der Hardware, wodurch die Hardware in vollem Umfang genutzt werden kann. Dabei findet ein Kontextwechsel vom User-Mode in den Kernel-Mode statt, nach Abarbeitung des Systemaufrufs wird wieder in den User-Mode gewechselt und das zu bearbeitende Programm wird fortgeführt.
 
 b)
-- exec
-- stat
-- ioctl
-- mmap
-- brk
+exec: Führt ein Programm aus und ersetzt dabei den ursprünglichen Prozess durch einen neuen Prozess, wodurch eine Rückkehr       zum aufrufenden Prozess nicht mehr möglich ist.
+stat: Gibt verschiedene Informationen über eine Datei oder über das Dateisystem dieser wieder.
+ioctl: Ein Input/Output Control, welches in der Lage ist, verschiedene Parameter eines Geräts zu manipulieren.
+mmap: Lädt Dateien oder Geräte in den Speicher des Systems.
+brk: Ist in der Lage, einem Prozess zusätzlichen Speicher zu allozieren beziehungsweise Speicher zu verringern.
 
-c) (strace)
+c)
+strace beobachtet den Aufruf und die Abarbeitung eines Kommandos und speichert dabei in einer Datei nützliche Informationen über getätigte Systemaufrufe und Signale von Prozessen. Somit eignet sich das Programm strace sehr gut zum Debugging und auch sonst als Diagnosetool.
 
-d) (strace ls)
+d)
+Zunächst die Analyse der Kommandos:
+ls /etc              listet die Dateinamen aller (nicht-versteckten) Dateien im Ordner /etc
+
+ls -l /etc           listet die Dateinamen aller (nicht-versteckten) Dateien im Ordner /etc und gibt zu jeder Datei                                      folgende zusätzliche Informationen: Zugriffsrechte, Besitzer, Dateigröße, Erstellungsdatum
+
+ls -la /etc          wie ls -l /etc, aber mit versteckten Dateien (also Einträge die mit . starten)
+
+Der erste Befehl verwendet lediglich ein paar wenige Male open und fstat, um gewisse Informationen über Rechte und sonstige Eiegnschaften abzufragen und verwendet dann schließlich das einzige mal stat auf /etc, um die Ordnerinhalte aufzulisten. Insgesamt werden nur 20 Syscalls getätigt.
+
+Beim zweiten Befehl sieht das sehr anders aus: Aufgrund der Tatsache, dass dieser zu jeder aufgelisteten Datei die oben genannten zusätzlichen Informationen ausgibt, müssen viel mehr Syscalls gemacht werden, um an die benötigten Informationen ranzukommen. Während die Anzahl der Calls von open und fstat nur leicht angestiegen ist, werden im vergleich zum vorigen Befehl sehr viel mehr stat Calls durchgeführt werden, um eben Sachen wie zum beispiel die Zugriffsrechte zu erfahren, zudem müssen nun auch ziemlich viele lstat Calls benutzt werden, um auf die Dateien im /etc Ordner zuzugreifen. In Summe sind es nun 519 calls, also ein Vielfaches vom ersten Befehl.
+
+Im Vergleich zum zweiten Befehl kommen beim dritten Befehl lediglich ein paar wenige stat und lstat Calls dazu. Dies lässt sich dadurch erklären, dass sich im Ordner /etc ein paar wenige "versteckte" Dateien befinden, auf die auf gewohnte Weise mit lstat zugegriffen wird und mithilfe von stat zusätzliche Informationen abgefragt werden wie z.B. Zugriffsrechte.
