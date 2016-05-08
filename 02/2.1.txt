@@ -26,7 +26,7 @@ e)
 &i = pi;
 Diese Zuweisung ist nicht möglich. Zwar haben theoretisch &i und pi den gleichen Wert aufgrund vorheriger Operationen,
 jedoch ist es einfach syntaktisch nicht korrekt, einer Variable mit vorangestelltem Adressoperator etwas zuzuweisen, da
-sie kein "lvalue" ist; würde man die Adresse der Variable i ändern wollen müsste man von Grund auf mit Pointern arbeiten.
+sie kein "lvalue" ist.
 
 f)
 z = &zeile[43]-i;
