@@ -1,0 +1,38 @@
+a) 	
+zeile[1] = 's';
+
+Diese Operation ist möglich. Es wird im char-array zeile der char an der Stelle mit Index 1, also ' ', ersetzt durch
+den char 's'.
+
+b)
+zeile++;
+
+Diese Operation ist nicht möglich, da zeile als array deklariert wurde und man die Adresse des arrays auf diese Weise nicht
+modifizieren kann, da dies syntaktisch unkorrekt ist. Möchte man mittels solcher Pointer Arithmetik über ein array iterieren,
+so müsste man eine gesonderte Pointer-Variable erstellen, welche auf den ersten Eintrag des Arrays zeigt.
+
+c)
+pi = &i;
+
+Diese Operation ist möglich. Es wird der Wert von der variable pi auf die Adresse von der Variable i im Speicher gesetzt.
+Würde man pi nun mittels * dereferenzieren, so wäre der Wert von *pi = 0, also gleich dem von i.
+
+d)
+*pi = 42;
+Diese Operation ist möglich. Der Wert von *pi wird also auf 42 gesetzt. Da aber der Wert von *pi an der gleichen Stelle
+im Speicher liegt wie der der Variable i, ist nun also auch der Wert der variable i gleich 42.
+
+e)
+&i = pi;
+Diese Zuweisung ist nicht möglich. Zwar haben theoretisch &i und pi den gleichen Wert aufgrund vorheriger Operationen,
+jedoch ist es einfach syntaktisch nicht korrekt, einer Variable mit vorangestelltem Adressoperator etwas zuzuweisen, da
+sie kein "lvalue" ist; würde man die Adresse der Variable i ändern wollen müsste man von Grund auf mit Pointern arbeiten.
+
+f)
+z = &zeile[43]-i;
+Diese Operation ist möglich. &zeile[43] ist die Speicheradresse des Eintrags mit Index 43 im array zeile, also dem Buchstaben 't'.
+Davon wird nun der Wert von i abgezogen, also 42. Jedoch arbeitet der Compiler so, dass von der Speicheradresse nicht
+wortwörtlich 42 subtrahiert wird, sondern er weiß, dass ein char array vorliegt, und subtrahiert deshalb von der
+gegebenen Speicheradresse 42 mal die Größe eines Eintrags des arrays, also je nach Architektur des auszuführenden System
+z.B. ein byte. Also hat &zeile[43]-i als Wert die Adresse von zeile[1]. Letzenendens wird der Variable z also &zeile[1] zugewiesen;
+da z ein Pointer ist könnte man z dereferenzieren, *z wäre dann gleich 's'.
