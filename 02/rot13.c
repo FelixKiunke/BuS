@@ -31,8 +31,7 @@ int print_rot13(int fd) {
     uint8_t buf[BUF_SIZE];
 
     // Liest häppchenweise die Inhalte der übergebenen Dateien, rotiert die
-    // Buchstaben, und schreibt das ganze dann in stdout. Wir verwenden hier
-    // nicht printf, da es nicht mit Null-Bytes umgehen kann.
+    // Buchstaben, und schreibt das ganze dann in stdout.
     while ((len = read(fd, &buf, BUF_SIZE))) {
         if (len < 0)
             return errno;
@@ -44,6 +43,19 @@ int print_rot13(int fd) {
                 buf[i] = (buf[i] - 97 + 13) % 26 + 97;
         }
 
+        /* Es wäre hier theoretisch auch möglich, printf("%s", buf) zu nutzen,
+         * wobei man sicherstellen müsste, dass der Bufferinhalt immer mit \0
+         * endet. Allerdings sollte der Eingabestring so keine Null-Bytes ent-
+         * halten. Da die Bytelänge des Strings bekannt ist, bietet es sich an,
+         * write() zu verwenden. So können Null-Bytes einfach durchgeleitet
+         * werden. Alternativ könnte man auch
+         * - mit printf("%c") in der for-Schleife oben die rotierten Zeichen
+         *   zeichenweise auszugeben, was allerdings wenig performant wäre, oder
+         * - alle Null-Bytes im String entfernen, was natürlich den String
+         *   unzulässig verändern würde, oder
+         * - das Problem ignorieren, wodurch Eingaben mit Null-Bytes an dieser
+         *   Stelle abgeschnitten würden.
+         */
         if (write(1, buf, len) == -1)
             return errno;
     }
