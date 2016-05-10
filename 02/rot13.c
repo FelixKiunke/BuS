@@ -3,6 +3,7 @@
  * schau dir dafür die man pages an.
  */
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdint.h>
@@ -10,8 +11,7 @@
 #include <errno.h>
 #include <sys/types.h>
 
- #define BUF_SIZE 1024
-
+#define BUF_SIZE 1024
 
 /*
  * Dies ist ein mögliches Grundgerüst für eine
@@ -24,11 +24,19 @@
  * Beachte nur Buchstaben, keine Sonderzeichen.
  * Der Modulo operator könnte von Hilfe sein ;)
  */
-void print_rot13(int fd) {
+
+// Upon successful completion, returns 0, otherwise errno
+int print_rot13(int fd) {
+    ssize_t i, len;
     uint8_t buf[BUF_SIZE];
 
-    ssize_t len, i;
+    // Liest häppchenweise die Inhalte der übergebenen Dateien, rotiert die
+    // Buchstaben, und schreibt das ganze dann in stdout. Wir verwenden hier
+    // nicht printf, da es nicht mit Null-Bytes umgehen kann.
     while ((len = read(fd, &buf, BUF_SIZE))) {
+        if (len < 0)
+            return errno;
+
         for (i = 0; i < len; i++) {
             if (buf[i] >= 65 && buf[i] <= 90)
                 buf[i] = (buf[i] - 65 + 13) % 26 + 65;
@@ -36,9 +44,11 @@ void print_rot13(int fd) {
                 buf[i] = (buf[i] - 97 + 13) % 26 + 97;
         }
 
-        write(1, buf, len);
-        fflush(stdout);
+        if (write(1, buf, len) == -1)
+            return errno;
     }
+
+    return 0;
 }
 
 void print_usage(char* name) {
@@ -46,46 +56,45 @@ void print_usage(char* name) {
     printf("Print the ROT13 encoded/decoded content of FILE\n");
 }
 
-/*
- * Dies ist die main Methode
- */
-int main(int argc, char** argv) {
-    /*
-     * Deklarier deine benötigten Variablen
-     */
-    int fd;
+void print_error(char* name, char* msg, int errnum) {
+    char *errormsg = strerror(errnum);
+    fprintf(stderr, "%s: %s: %s\n", name, msg, errormsg);
+}
 
-    /*
-     * Vergiss nicht die command line zu prüfen
-     */
+int main(int argc, char* argv[]) {
+    int fd, ret;
+
     if (argc < 2) {
         print_usage(argv[0]);
-        return 1;
+        // Normalerweise würde ich return 1 verwenden, aber die Aufgabenstellung
+        // erfordert ja exit()
+        exit(1);
     }
 
     fd = open(argv[1], O_RDONLY);
 
-    if (fd == -1)
-        goto fail;
+    if (fd == -1) {
+        int errsv = errno;
+        print_error(argv[0], "cannot open() file", errsv);
+        exit(errsv);
+    }
 
-    /*
-     * Öffne die Datei und ließ sie ein,
-     * gib den Inhalt auf dem Bildschirm aus.
-     * Vergiss nicht Fehlerfälle abzufangen.
-     */
+    ret = print_rot13(fd);
     
-    print_rot13(fd);
+    if (ret != 0) {
+        // Wir ignorieren close()-Fehler hier, da wir hier ohnehin abbrechen.
+        close(fd);
+        print_error(argv[0], "cannot print_rot13() file", ret);
+        exit(ret);
+    }
 
-    close(fd);
-    
-    /*
-     * Beende das Program sorgfältig.
-     */
+    if (close(fd) == -1) {
+        int errsv = errno;
+        print_error(argv[0], "cannot close() file", errsv);
+        exit(errsv);
+    }
+
     return 0;
-
-fail:
-    printf("error %d", errno);
-    return 1;
 }
 
 
