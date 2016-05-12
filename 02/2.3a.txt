@@ -6,21 +6,21 @@ a+b=11
 [diff] : a=4, b=3
 a-b=-1
 
-Innerhalb der main Funktion werden die globalen Variablen a und b durch die lokalen Variablen a und b überdeckt, und
+Innerhalb der main Funktion werden die globalen Variablen a und b durch die lokalen Variablen a und b Ã¼berdeckt, und
 da diese innerhalb der main Funktion auf 5 und 6 gesetzt werden, werden beim printen der ersten Zeile eben diese lokalen
 Variablen genommen, wodurch der Output 'a=5 b=6' ist und nicht 'a=1 b=2'.
 
-In der nächsten printf Anweisung in main wird eine die Funktion summe als Parameter übergeben, weshalb diese zuerst ausgewertet
-werden muss. Als Parameter erhält summe die lokalen variablen a und b, weshalb die Zuweisung p1=a und p2=b
+In der nÃ¤chsten printf Anweisung in main wird eine die Funktion summe als Parameter Ã¼bergeben, weshalb diese zuerst ausgewertet
+werden muss. Als Parameter erhÃ¤lt summe die lokalen variablen a und b, weshalb die Zuweisung p1=a und p2=b
 stattfindet. In der Funktion selber soll wieder auf a und b zugegriffen werden zum printen von [summe]: a=1, b=2, jedoch
-ist die Funktion logischerweise außerhalb der main-Funktion definiert, weshalb summe als a und b die globalen Variablen
+ist die Funktion logischerweise auÃŸerhalb der main-Funktion definiert, weshalb summe als a und b die globalen Variablen
 nimmst, weshalb eben der Output a=1, b=2 zustande kommt. Die Funktion returnt aber die Summe von p1 und p2, welche den Wert
-der lokalen Variablen a und b in der main-Funktion haben, weshalb summe 5+6, also 11 returnt, was dazu führt, dass a+b=11
-ausgegeben wird, da printf das zurückgegebene Ergebnis von summe verwendet.
+der lokalen Variablen a und b in der main-Funktion haben, weshalb summe 5+6, also 11 returnt, was dazu fÃ¼hrt, dass a+b=11
+ausgegeben wird, da printf das zurÃ¼ckgegebene Ergebnis von summe verwendet.
 
-Der Funktion diff werden wieder a und b übergeben, wodurch p1=a und p2=b zugewiesen wird, zusätzlich wird die Adresse von
-c übergeben. Innerhalb der Funktion diff werden lokale Variablen a und b eingeführt, welche die globalen a und b verdecken,
+Der Funktion diff werden wieder a und b Ã¼bergeben, wodurch p1=a und p2=b zugewiesen wird, zusÃ¤tzlich wird die Adresse von
+c Ã¼bergeben. Innerhalb der Funktion diff werden lokale Variablen a und b eingefÃ¼hrt, welche die globalen a und b verdecken,
 wodurch bei der Ausgabe a=4, b=3 zustande kommt, da eben diese Zuweisungen an die neuen lokalen variablen stattfinden.
-Anschließend wird p1-p2, also von den Werten her a-b mit den Werten der lokalen Variablen aus main, gerechnet, das Ergebnis
-wird in *d gespeichert. Da beim Funktionsaufruf die Adresse von c übergeben wurde, wird also dadurch damit auch der Wert von
-c überschrieben mit 6-5, also -1, was die letzte Ausgabe erklärt.
+AnschlieÃŸend wird p1-p2, also von den Werten her a-b mit den Werten der lokalen Variablen aus main, gerechnet, das Ergebnis
+wird in *d gespeichert. Da beim Funktionsaufruf die Adresse von c Ã¼bergeben wurde, wird also dadurch damit auch der Wert von
+c Ã¼berschrieben mit 6-5, also -1, was die letzte Ausgabe erklÃ¤rt.
