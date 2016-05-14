@@ -1,0 +1,27 @@
+b)
+Bei write() handelt es sich um einen syscall, welcher ungepuffert (theoretisch) direkt in die Standardausgabe geschrieben wird.
+fprintf() ist jedoch gepufferter I/O, es sammelt sich also zuerst ein chunk an Daten, welcher dann schließlich geschrieben wird.
+In dem gegebenen Beispielprogramm sollen einzelne chars in kurzer Abfolge geprintet werden, weshalb fflush benötigt wird. Diese
+Funktion leert den Puffer manuell, wodurch der Pufferinhalt geschrieben wird, im gegebenen Programm also immer ein einzelner char.
+Bei write() ist ein "flushen" nicht notwendig, da im Prinzip mittels syscall sofort (bzw. so schnell wie möglich) geschrieben wird.
+
+Im Allgemeinen sollte man eher fprintf() und, falls notwendig, fflush verwenden, da gepufferter I/O meistens schlichtweg effizienter ist,
+weil zum Einen die Daten effizienter übertragen werde, und zum anderen, je nach Anwendungsfall, write() mehr Syscalls verursacht, wenn
+zum Beispiel write innerhalb einer Loop aufgerufen wird, was wiederum mehr Kontextwechsel erzeugt und somit zulasten der Performance ist,
+wohingegen sich bei fprintf unter Umständen die Daten zunächst im Puffer sammeln können, bis sie letzte Endes geschrieben werden, was
+weniger syscalls verursacht.
+
+c)
+Ein Zombie-Prozess ist ein Prozess, welcher beendet ist, aber noch in der Prozesstabelle steht. Dies kommt zum Beispiel zu Stande, indem
+ein Kindprozess vor seinem Vaterprozess fertig ist, wodurch der Kindprozess zwar beendet ist, aber weiter in der Prozesstabelle steht und
+dabei geringfügig Systemressourcen belegt, bis der Vaterprozess mittels z.B. wait() das Kind zum Löschen aus der Prozesstabelle frei-
+gibt.
+Der "Zombie Zustand" eines Prozesses ist notwendig, da ein Vaterprozess sich so über die Art des Beendens des Kindes erkundigen kann,
+zum Beispiel erfolgreiches Ausführen, mit Fehlern oder Abstürzen usw. Diese Abfrage ist nur möglich, wenn der Kindprozess weiter als
+Zombie existiert.
+
+d)
+Dies wird so gemacht, da der Kernel bei Beendigung eines Kindprozesses ein besonderes Signal an den Vaterprozess schickt, um ihm dies
+mitzuteilen. Ohne die Information, was überhaupt der Vaterprozess vom entsprechenden Kindprozess ist, wäre dies nur schwer möglich.
+Zudem kann die Information über die PID des Vaters für die Interprozesskommunikation von Nutzen sein falls es zum Beispiel aufgrund
+eines Anwendungsfalls notwendig ist, diese vom Kind aus einzurichten.
