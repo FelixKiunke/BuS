@@ -25,3 +25,10 @@ Dies wird so gemacht, da der Kernel bei Beendigung eines Kindprozesses ein beson
 mitzuteilen. Ohne die Information, was überhaupt der Vaterprozess vom entsprechenden Kindprozess ist, wäre dies nur schwer möglich.
 Zudem kann die Information über die PID des Vaters für die Interprozesskommunikation von Nutzen sein falls es zum Beispiel aufgrund
 eines Anwendungsfalls notwendig ist, diese vom Kind aus einzurichten.
+
+e)
+Bitte mit der Option -pthread compilieren, da pthreads verwendet werden! Leitet man den Output von prozesse.c auf 3.1e.c mittels
+pipe um, so wird der gewünschte Output auf der Konsole ausgegeben.
+
+Aufgabe 3.2)
+b) Der Code befindet sich in listen.c !
