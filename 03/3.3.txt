@@ -1,0 +1,49 @@
+a)
+Sowohl Pipes als auch Shared Memory werden zur IPC genutzt.
+
+Ein großer Vorteil von Pipes ist die relativ leichte Verwaltung, da nach dem Anlegen der Pipe der Kernel wichtige Verwalungsaufgaben
+übernimmt, wie z.B. die Synchronisation , wodurch mehrere Prozesse gleichzeitig auf die Pipe zugreifen können.
+Außerdem gibts es sogenannte Named Pipes, welche das eigentliche Konzept der Pipes erweitern und keinem Prozess fest zugeordnet sind
+und somit in ihrer Nutzung flexibler sind, da sie sich im Prinzip wie eine Datei verhalten.
+Pipes bringen jedoch auch Nachteile mit sich: Zunächst sind (zumindest reguläre) Pipes im Wesentlichen nur auf zwei Kommunikationspartner
+ausgerichtet. Zwar können an einer Pipe durch z.B. fork() Aufrufe mehr als nur zwei Prozesse hängen, jedoch sind Pipes für solche Fälle
+nicht wirklich gemacht, da z.B. etwas einmal aus der Pipe gelesenes danach aus der Pipe verschwindet, was unter Umständen nicht
+gewollt ist.
+Vor allem aber finden bei Pipes immer Kontextwechsel in den Kernel-Space statt, da diese eben Kernel verwaltet sind. Dies verbraucht
+wichtige Systemrssourcen, weshalb Pipes nicht unbedingt sehr schnell/effizient sind.
+
+Bei Shared Memory kann ein bestimmter Speicherbereich von mehreren Prozessen gleichzeitig genutzt werden zur IPC, indem dieser
+Speicherbereich in den Speicher der jeweiligen Prozesse gemapt wird. Daraus folgt, dass Shared Memory einen asynchronen Zugriff
+auf gemeinsame Daten zwischen Prozessen ermöglichen welcher insbesondere schnellere IPC als Pipes ermöglicht.
+Zudem, wie bereits impliziert, ist Shared Memory vor allem für mehrere Prozesse im Vergleich zu Pipes geeignet, da ein Prozess
+lediglich genug Speicher rbaucht, um dann den Shared Memory in seinen eigenen mapen zu lassen.
+Die Vorteile bringen aber auch Nachteile mit sich: Zwar können sich viele Prozesse am Shared Memory beteiligen, jedoch können bei nicht
+synchronisiertem Zugriff von Prozessen darauf ungewünschte Seiteneffekte eintreten.
+Da der Zugriff also je nach Anwendung synchronisiert werden sollte, folgt daraus, dass Shared Memory einen eher höheren Verwaltungs-
+aufwand haben als Pipes.
+
+b)
+Je nach Pipe-Art liegt eine Pipe mehr oder weniger als Datei im Dateisystem vor, jedoch ist letzten Endes eine Pipe vom Konzept eher
+ein Datenstrom während eine Datei nunmal eine Datei ist.
+Zum Einen ist eine Pipe eine temporäre Datei, nachdem also der Zugriff auf die Pipe beendet ist und die Pipe geschlossen wird, wird die
+Datei gelöscht, während bei einer "normalen" Datei ein Ende des Zugriffs nicht das Löschen der Datei mit sich zieht.
+Zum Anderen hat eine Pipe das FIFO-Prinzip, das heißt, dass Sachen, welche zuerst reingeschrieben wurden, auch zuerst gelesen werden,
+wie bei einer normalen Datei. Jedoch verschwinden gelesene Daten nach dem Lesezugriff aus der Pipe, da FIFO dies so beschreibt, was
+offensichtlich bei einer normalen datei nicht der Fall ist.
+
+c)
+Im Wesentlichen besitzt ein Prozess einen eigenen Speicherbereich, eine gewisse zugeteilte CPU-Zeit je nach
+Anwendung, sonstige Ressourcen und ermöglicht zunächst einmal einen einzigen Kontrollfluss.
+Ein Thread ist ein sogenannter "Lightweight Process" existiert innerhalb eines Prozesses. Mehrere Threads ermöglichen mehrere Kontroll-
+flüsse innerhalb eines Prozesses. Während ein Prozess einen eigenen Speicherbereich, teilen sich Threads zumindest den Addressbereich 
+eines Prozesses und auch sonst einige Speicherbereiche des Prozesses, aber haben zum Beispiel einen eigenen Stack, zudem müssen sich
+Threads die CPU-Zeit des zugrunde liegenden Prozesses teilen. Da sich zum Beispiel Threads globale Variablen teilen gestaltet sich die
+Kommunikation von Threads (innerhalb eines Prozesses) meist einfacher als die Kommunikation zwischen Prozessen.
+
+d) //nicht sicher
+Sowohl User-Threads als auch Kernel-Threads haben ihren eigenen Stack; User-Threads verstecken sich hinter einem Prozess und
+haben ihre eigenen Stacks innerhalb des Prozesses, lediglich der Kernel sieht diese Threads nicht, sondern nur einen single-threaded
+Prozess, dies beeinflusst jedoch nicht den Speicher der Threads.
+Kernel-Threads haben ebenfalls sicherlich eigene Stacks, da ein Wechsel zwischen Kernel Threads relativ aufwendig ist, da eben jeder
+Kernel-Thread seinen eigenen Stack usw. hat.
+
