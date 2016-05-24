@@ -29,6 +29,8 @@ eines Anwendungsfalls notwendig ist, diese vom Kind aus einzurichten.
 e)
 Bitte mit der Option -pthread compilieren, da pthreads verwendet werden! Leitet man den Output von prozesse.c auf 3.1e.c mittels
 pipe um, so wird der gewünschte Output auf der Konsole ausgegeben.
+Betrachtet man nun z.B. mittels 'top' die zugewiesene Prozessorzeit der einzelnen Prozesse des Buchstabengenerators, so fällt
+auf, dass diese ungefähr gleich ist.
 
 Aufgabe 3.2)
 b) Der Code befindet sich in listen.c !
