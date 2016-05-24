@@ -28,14 +28,12 @@ int main(void)
 {
   int child_A, child_B;
 
-//  child_A = fork();                 /* neuen Prozess starten                          */
-//  Zuweisungen mit fork in den if Klammern, da sich sonst der erste child process mitforken würde
-  if ((child_A = fork()) == 0)        /* Bin ich der Sohnprozess?                       */
-    child_A_proc();                   /* ... dann child-Funktion ausfuehren             */
-  else if ((child_B = fork()) == 0)
-    child_B_proc();
-  else
-    parent_proc();                    /* ... sonst parent-Funktion ausfuehren           */
+  if ((child_A = fork()) == 0)      // Child A starten -- bin ich A?
+    child_A_proc();                 // dann child_A_proc() starten
+  else if ((child_B = fork()) == 0) // ... sonst B starten -- bin ich B?
+    child_B_proc();                 // dann child_B_proc() starten
+  else                              // ... sonst bin ich der Parent,
+    parent_proc();                  // also parent_proc() starten
 
   return 0;
 }
