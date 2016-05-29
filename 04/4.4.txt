@@ -1,3 +1,8 @@
 b)
+Es kam zu genau einer Verletzung einer Deadline, nämlich der von P1. Da dieser einen Zeitschritt nach seiner Deadline fertig geworden
+ist, beträgt also die maximale Verspätung eine Zeiteinheit.
 
 c)
+Es würde die obige Situation verbessern, da P1 dann nicht mehr erst bei Zeiteinheit 16 von CPU1 geschedult würde, sondern 
+bei Zeitschritt 14 zur CPU2 gewechselt und somit ab Zeitschritt 15 bearbeitet werden könnte. Dies würde bewirken, dass P1 dann genau
+bei der Deadline 19 fertig wird, also gäbe es nun keine Deadlineverletzungen mehr und die maximale Verpätung wäre somit 0.
