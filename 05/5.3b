@@ -1,0 +1,15 @@
+Ein Problem liegt darin, dass eingefahreneWagen nicht synchronisiert ist, zum Beispiel: Angenommen es ist gerade kein Wagen da und es
+kommen zwei Wagen fast gleichzeitig an. Der Prozess des ersten Wagens springt also nicht in 'while (eingefahreneWagen > 0)' und geht
+einen Schritt weiter im Program Counter. Nun wird der Prozess durch den des zweiten Wagens unterbrochen, dieser gelangt ebenfalls
+nicht in die oben genannte while-Schleife, da eingefahreneWagen noch 0 ist, setzt dann eingefahreneWagen auf 1 und benutzt
+'fahreAufPlattform()'. Nun wird der Prozess des zweiten Wagens unterbrochen und der erste Wagen ist wieder dran, setzt
+eingefahreneWagen auf 1 und führt dann auch 'fahreAufPlattform()' aus. Dies ist jedoch nicht erlaubt, da nur ein Wagen auf
+der Plattform sein kann.
+
+Zweites Problem: verfügbareSitze ist ebenfalls nicht synchronisiert, zum Beispiel: Sei gerade ein Wagen auf der Plattform und eine Person
+befindet sich darin, also verfügbareSitze = 1. Kommen nun zwei Besucher fast gleichzeitig an, so kann es sein, dass zunächst einmal
+die erste Person AnkunftBesucher() aufruft, nicht in die while-Schleife springt, da verfügbareSitze = 1, betreteWagen() ausführt, und
+dann durch den Prozess des zweiten Besuchers unterbrochen wird. Dieser springt ebenfalls nicht in die while-Schleife, betritt den
+Wagen mit betreteWagen() und dekrementiert verfügbareSitze und ist dann fertig. Nun macht der Prozess der ersten Person weiter
+und dekrementiert verfügbareSitze und ist dann auch fertig. Nun sind aber theoretisch 3 Personen im Wagen, zudem ist verfügbareSitze
+negativ, was nicht passieren sollte.
