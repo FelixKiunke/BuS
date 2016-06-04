@@ -1,0 +1,17 @@
+Diese Lösung funktioniert nicht immer wie gewünscht, da ein "Reporterprozess" zwischen den beiden 'wait(politicianReady);'
+Anweisungen unterbrochen werden kann. So kann es zum Beispiel zu dem Fall kommen, dass zwei Politiker zur Verfügung
+stehen (also politicianReady == 2 ist), anschließend treffen nahezu gleichzeitig zwei Reporter ein; der erste Reporter
+führt 'wait(politicianReady);' aus und wird dann durch den zweiten Reporter unterbrochen, welcher ebenfalls sein erstes
+'wait(politicianReady);' ausführt. Dann ist politicianReady == 0 und nach Aufgabenstellung soll jede Wartezeit
+vermieden werden, jedoch sind zwei Politiker vorhanden und ebenfalls zwei Reporter, demnach sollten die zwei Politiker
+und ein Reporter den Aufzug nehmen, dazu kommt es jedoch nicht, da beide Reporter noch einmal 'wait(politicianReady);'
+ausführen müssen.
+
+Eine Lösungsmöglichkeit wäre das Einführen einer FIFO-Queue für die Reporter; beim Aufruf von reporterArrives() wird der
+aufrufende Prozess schlafen gelegt und in die Queue eingereiht. Beim Einfügen eines Reporters wird geprüft, ob 'politicianReady >= 2'.
+Ist dies der Fall, so wird der vorderste Reporter in der Queue geweckt und führt dann 'EnterElevator();' und den Code danach
+aus.
+Führt ein Politiker 'signal(politicianReady);' aus, so wird nach Inkrementierung von politicianReady noch geprüft,
+ob 'politicianReady >= 2' und ob die Reporter-Queue nicht-leer ist. Sind diese beiden Bedingungen erfüllt, so wird
+politicianReady um 2 dekrementiert und es wird der vorderste Reporter in der Queue geweckt, welcher dann
+'EnterElevator();' und den Code danach ausführt.
