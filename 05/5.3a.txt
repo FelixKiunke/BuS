@@ -1,0 +1,39 @@
+// Zählsemaphor, Queue ist voll wenn die Variable 0 ist, Maximum n
+int QueueSpace = n;
+// Zählsemaphor, Anzahl der Elemente in der Queue, Maximum n
+int QueueCount = 0;
+
+int QueueAccess = 1; // Mutex, nur ein Queuezugriff zur gleichen Zeit
+int enqMutex = 1;    // Mutex, nur ein einfügender Prozess zur gleichen Zeit
+int deqMutex = 1;    // Mutex, nur ein entnehmender Prozess zur gleichen Zeit
+
+list queue;
+
+void enqueue(element e) {
+    wait(enqMutex);
+    // Warte, bis in der Queue Platz zum Einfügen ist
+    wait(QueueSpace);
+    
+    wait(QueueAccess);
+    // Füge element hinzu, erhöhe QueueCount, da nun ein Element mehr drin
+    queue.add(e);
+    signal(QueueCount);
+    signal(QueueAccess);
+    
+    signal(enqMutex);
+}
+
+element dequeue() {
+    wait(deqMutex);
+    // Warte, bis in der Queue ein Element zum Entnehmen ist
+    wait(QueueCount);
+    
+    wait(QueueAccess); 
+    // Entnehme Element, inkrementiere QueueSpace, da neuer Platz vorhanden
+    element e = queue.pop();
+    signal(QueueSpace);
+    signal(QueueAccess);
+    
+    signal(deqMutex);
+    return e;
+}
