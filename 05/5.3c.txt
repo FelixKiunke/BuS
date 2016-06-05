@@ -1,0 +1,22 @@
+int plattformPlatz = 1;    // Mutex, 1 wenn Platz auf der Plattform ist
+int eingestiegeneBesucher = 0;  // Zählsemaphor, Maximum 2
+int verfügbareSitze = 0;   // Zählsemaphor, Maximum 2
+
+void AnkunftWagen() {
+    wait(plattformPlatz);
+    fahreAufPlattform();
+    öffneTüren();
+    signal(verfügbareSitze);
+    signal(verfügbareSitze);
+    wait(eingestiegeneBesucher);
+    wait(eingestiegeneBesucher);
+    schließeTüren();
+    verlassePlattform();
+    signal(plattformPlatz);
+}
+
+void AnkunftBesucher() {
+    wait(verfügbareSitze);
+    betreteWagen();
+    signal(eingestiegeneBesucher);
+}
