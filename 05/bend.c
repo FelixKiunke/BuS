@@ -36,7 +36,7 @@ sem_t* plattform_lock;
 // Zählsemaphor für die wartenden Besucher, mit 0 initialisiert
 sem_t* verfuegbare_sitze;
 
-// Zählsemaphor für die wartenden Besucher, mit 0 initialisiert
+// Zählsemaphor für die eingestiegenen Besucher, mit 0 initialisiert
 sem_t* eingestiegene_besucher;
 
 void AnkunftWagen() {
