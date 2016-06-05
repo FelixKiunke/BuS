@@ -1,0 +1,11 @@
+Dieses Problem ließe sich zum Beispiel mit Semaphoren mit einer Warteschlange lösen. Benötigt wäre eine FIFO-Queue, welche
+eine standardmäßige dequeue() Funktion zur verfügung stellt und außerdem eine enqueue_normal() und eine enqueue_vip() Funktion,
+wobei die enqueue_normal() einen normalen Besucherprozess standardmäßig an das Ende der Queue einreiht, während enqueue_vip()
+einen VIP Besucherprozess vor allen normalen Besuchern in die Queue einreiht, aber hinter möglicherweise sich in der Queue
+befindenen VIP Besuchern.
+Zudem seien die beiden Zählsemaphoren eingestiegeneBesucher und verfügbareSitze wie aus c) und d) gegeben. Demnach wird ein Prozess,
+welcher Ankunftbesucher() aufruft, mittels enqueue_normal() in die Queue gereiht, und ein Prozess,  welcher AnkunftVIP() aufruft,
+mittels enqueue_vip() eingereiht. Bei beiden wird nach der Einreihung wait(verfügbareSitze) aufgerufen, was darauf wartet, dass
+verfügbareSitze > 0, und dann verfügbareSitze um eins dekrementiert und dequeue() aufruft, also den vordersten der Warteschlange
+freigibt, welcher dann in den Wagen einsteigt. Danach läuft das Programm wie sonst weiter. So wird sicher gestellt, dass VIP's
+Vorrang haben.
