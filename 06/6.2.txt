@@ -1,0 +1,27 @@
+// Zählvariable, zählt die Anzahl der wartenden Prozesse
+int process_count = 0;
+
+// Mutex, synchronisiert Zugriff auf die Zählvariable (der wartenden Prozesse)
+int count_access = 1;
+
+// Zählsemaphor, lässt Prozess durch wenn alle n angekommen sind
+int release = 0;
+
+pass() {
+    wait(count_access);
+    if(process_count < n-1) {
+        process_count++;
+        signal(count_access);
+        wait(release);
+    }
+    // Sonst ist nach Voraussetzung die Anzahl der Prozesse gleich n-1, also gebe frei
+    else {
+        int i;
+        // Wecke alle Threads auf
+        for(i = 1; i <= (n-1); i++) {
+            signal(release);
+        }
+        process_count = 0;
+        signal(count_access);
+    }
+}
