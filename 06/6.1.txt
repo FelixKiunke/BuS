@@ -1,0 +1,38 @@
+a)
+Zum Einen können dadurch in gewissen Fällen Deadlocks verhindert werden, da eine Rückgabe von false auf einen Fehler bzw. ein Deadlock hinweisen kann,
+woraufhin man mittels if-Verzweigung eine Behandlung des Problems programmieren könnte.
+Außerdem kann es sein, dass ein Prozess mittels wait auf einen gewissen Bereich Zugriff will (oder z.B. Zugriff auf ein Betriebsmittel möchte), aber
+vielleicht auch ohne Zugriff darauf noch sinnvoll anderen Code ausführen könnte und dann zu einem späteren Zeitpunkt nochmal mittels wait einen Zugriff
+anfragt. Hierbei wäre dann so eine Implementierung von Semaphoren sinnvoll, da man mittels if-else und dem Rückgabewert ein solches System realisieren könnte.
+
+b)
+boolean wait(semaphore s, boolean blocking):
+        if(blocking == false) {
+        // Wenn die Semaphore gerade gelocked ist, dann kann nix gemacht werden, also return false
+        if(s.lock == true) {
+            return false;
+        } else {
+            s.lock == true;
+            // Wenn der Wert der Semaphore kleiner als 1 ist, kommt der Prozess nicht rein
+            if(s.value < 1) {
+                s.lock = false;
+                return false;
+            } else {
+                s.value = s.value - 1;
+                s.lock = false;
+                return true;
+            }
+        }
+    } else {
+        // Sonst Code wie vorher im blockierenden Fall
+        while (TestAndSet(s.lock)){
+          {noop;}
+        }
+        s.value = s.value - 1;
+        if (s.value < 0) {
+        s.waiting_processes.add(get_pid());
+        s.lock = false;
+        block();
+        } else {
+            s.lock = false;
+        }
