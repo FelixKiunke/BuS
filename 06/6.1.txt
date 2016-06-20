@@ -25,8 +25,8 @@ boolean wait(semaphore s, boolean blocking):
         }
     } else {
         // Sonst Code wie vorher im blockierenden Fall
-        while (TestAndSet(s.lock)){
-          {noop;}
+        while (TestAndSet(s.lock)) {
+          noop;
         }
         s.value = s.value - 1;
         if (s.value < 0) {
