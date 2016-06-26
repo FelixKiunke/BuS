@@ -1,0 +1,16 @@
+a)
+Entscheidend ist die Summe der Längen der jeweiligen Segmente;
+Insgesamt stehen dem Prozess also 999+45+410+175+191+53+65 = 1938 Byte zur Verfügung.
+
+b)
+- physikalisch: 1895, logisch: (2,0).
+  kein Segmentation Fault, da Offset 0 < Länge 410 des Segments.
+
+- physikalisch: 1575, logisch: (3,175).
+  kein Segmentation Fault, da Offset 175 == Länge 175 des Segments und somit nicht größer als die Segmentlänge.
+  
+- physikalisch: 1935, logisch: (2,40)
+  kein Segmentation Fault, da Offset 40 < Länge 410 des Segments.
+  
+- physikalisch: 1050, logisch: (0,999).
+  kein Segmentation Fault, da Offset 999 == Länge 999 des Segments und somit nicht größer als die Segmentlänge.
