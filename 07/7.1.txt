@@ -1,0 +1,41 @@
+a)
+First-Fit: (512,256,3072) -> (389,256,3072) -> (0,256,3072) -> (0,256,2560) -> (0,256, 289)
+           Es werden die Anforderungen erfüllt.
+
+Rotating-First-Fit: (512,256,3072) -> (389,256,3072) -> (389,256,2683) -> (389,256,2171)
+                    Die letzte Anforderung von 2271 Bytes kann nicht erfüllt werden.
+                    
+Best-Fit: (512,256,3072) -> (512,133,3072) -> (123,133,3072) -> (123,133,2560) -> (123,133,289)
+          Die Anforderungen werden erfüllt.
+          
+Worst-Fit: (512,256,3072) -> (512,256,2949) -> (512,256,2560) -> (512,256,2560) -> (512,256,2048)
+           Die letzte Anforderung von 2271 Bytes kann nicht erfüllt werden.
+           
+b)
+- alle vier Strategien führen zum Erfolg:
+ändere die Anforderungsreihenfolge: 2271 Byte, 512 Byte, 389 Byte, 123 Byte.
+Speicherbereichsreihenfolge bleibt gleich (512 Byte, 256 Byte, 3072 Byte).
+First-Fit:          (512,256,3072) -> (512,256,801) -> (0,256,801) -> (0,256,412) -> (0,133,412)
+Rotating-First-Fit: (512,256,3072) -> (512,256,801) -> (0,256,801) -> (0,256,412) -> (0,133,412)
+Best-Fit:           (512,256,3072) -> (512,256,801) -> (0,256,801) -> (0,256,412) -> (0,133,412)
+Worst-Fit:          (512,256,3072) -> (512,256,801) -> (512,256,289) -> (123,256,289) -> (123,256,166)
+
+-(First-Fit,Worst-Fit) und (Rotating-First-Fit,Best-Fit) sollen in jedem Schritt den selben Speicherbereich auswahlen
+ändere die Anforderungsreihenfolge: 2271 Byte, 512 Byte, 389 Byte, 123 Byte.
+ändere Speicherbelegung: 3072 Byte als Erstes, dann 512 Byte, dann 256 Byte.
+First-Fit:          (3072,512,256) -> (801,512,256) -> (289,512,256) -> (289,123,256) -> (166,123,256)
+Rotating-First-Fit: (3072,512,256) -> (801,512,256) -> (801,0,256) -> (412,0,256) -> (412,0,133)
+Best-Fit:           (3072,512,256) -> (801,512,256) -> (801,0,256) -> (412,0,256) -> (412,0,133)
+Worst-Fit:          (3072,512,256) -> (801,512,256) -> (289,512,256) -> (289,123,256) -> (166,123,256)
+
+- nur Rotating-First-Fit und Best-Fit erfolgreich
+ändere die Anforderungsreihenfolge: 512 Byte, 389 Byte, 2271 Byte, 123 Byte.
+ändere Speicherbelegung: 3072 Byte als Erstes, dann 512 Byte, dann 256 Byte.
+First-Fit:          (3072,512,256) -> (2560,512,256) -> (2171,512,256) -> (2048,512,256)
+                    Anforderung 2271 Byte kann nicht erfüllt werden und wird deshalb übersprungen, also nicht erfolgreich.
+Rotating-First-Fit: (3072,512,256) -> (2560,512,256) -> (2560,123,256) -> (289,123,256) -> (289,0,256)
+                    Alles erfüllt.
+Best-Fit:           (3072,512,256) -> (3072,0,256) -> (2683,0,256) -> (412,0,256) -> (412,0,133)
+                    Alles erfüllt.
+Worst-Fit:          (3072,512,256) -> (2560,512,256) -> (2171,512,256) -> (2048,512,256)
+                    Anforderung 2271 Byte kann nicht erfüllt werden und wird deshalb übersprungen, also nicht erfolgreich.
