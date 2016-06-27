@@ -7,10 +7,10 @@ b)
   kein Segmentation Fault, da Offset 0 < Länge 410 des Segments.
 
 - physikalisch: 1575, logisch: (3,175).
-  kein Segmentation Fault, da Offset 175 == Länge 175 des Segments und somit nicht größer als die Segmentlänge.
+  Segmentation Fault, da Segment 3 nur Länge 175 hat und somit 1575 außerhalb liegt und sonst zu keinem anderen Segment gehört.
   
 - physikalisch: 1935, logisch: (2,40)
   kein Segmentation Fault, da Offset 40 < Länge 410 des Segments.
   
 - physikalisch: 1050, logisch: (0,999).
-  kein Segmentation Fault, da Offset 999 == Länge 999 des Segments und somit nicht größer als die Segmentlänge.
+  Segmentation Fault, da Segment 0 nur Länge 999 hat und somit 1050 außerhalb liegt und sonst zu keinem anderen Segment gehört.
