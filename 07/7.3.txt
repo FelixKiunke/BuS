@@ -1,0 +1,11 @@
+b)
+Die größtmögliche Speicheranforderung, die nun noch möglich ist, sind 4 MByte, da weder die 32, noch die 16,
+noch die 8 MByte Ebenen freien Platz haben.
+Es gehen nach Ablauf aller Schritte 5 MByte Speicher durch interne Fragmentierung verloren, da einerseits A
+nur 12 von den zustehenden 16 MByte benutzt, und außerdem F nur 3 von den zur Verfügung stehenden 4 MByte.
+
+d)
+Die größtmögliche Speicheranforderung, die nun noch möglich ist, sind 8 MByte, da dies der größte freie
+Knoten ist.
+Es geht nach Ablauf aller Schritte kein Speicher durch interne Fragmentierung verloren, da alle besetzten
+Knoten ihren Speicher komplett ausnutzen.
