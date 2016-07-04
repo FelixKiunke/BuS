@@ -1,0 +1,15 @@
+FIFO
+Es wird Seite 2 verdrängt, da diese sich am längsten im Hauptspeicher befindet im Vergleich zu den restlichen Seiten.
+(Zeitpunkt 120 kleiner als alle Anderen in der ersten Spalte.)
+
+LRU
+Es wird Seite 4 verdrängt, da diese am längsten nicht mehr benutzt wurde im vergleich zu den restlichen Seiten.
+(Zeitpunkt 255 kleiner als alle Anderen in der zweiten Spalte.)
+
+Second Chance
+Es wird Seite 1 gelöscht, da dies die älteste Seite mit nicht gesetztem A-Bit ist. (Seiten 0 und 2 sind zwar älter,
+haben aber ein gesetztes A-Bit.)
+
+NRU
+Es wird Seite 3 verdrängt, da sich Seite 3 als einzige Seite mit A=0 und D=0 in der niedrigsten NRU-Klasse befindet,
+und somit Klasse 1 nicht leer ist und bei der Verdrängung prioritisiert wird.
