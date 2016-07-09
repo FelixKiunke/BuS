@@ -1,0 +1,18 @@
+a)
+Polling ist sinnvoll, wenn ein periodisches Abfragen von Daten oder des Status eines Geräts notwendig ist, z.B.: Möchte
+man bei einem Mikrocontroller über längere Zeit die Spannung an einem PIN messen, um anschließend einen Verlauf zu
+erstellen, wobei man kleine Störungen ignorieren will, so eignet sich Polling sehr gut. Würde man Interrupts ver-
+wenden, so wäre dies nicht so effizient, da periodisch ein Interrupt gesendet werden müsste, wobei ein Interrupt
+eine Unterbrechung des Programmflusses mit Kontextsicherung etc. bedeutet, während Polling vorhersehbarer und
+fest im Programmcode implementiert ist.
+
+b)
+(i)  Für die Maus sind Interrupts gut zur I/O Steuerung geeignet. Polling wäre hier nicht optimal, da es auch
+     durchaus vorkommen kann, dass die Maus über längere Zeit nicht benutzt wird da z.B. mit der Tastatur
+     navigiert wird, wodurch Polling unnötig Systemressourcen verschwenden würde. Es sollte dann aber mit
+     Interrupts ein I/O-Buffer verwendet werden, da sonst eine kontinuierliche Mausbewegung etliche Interrupts
+     auslösen würde, während mit einem Buffer die Positionen in kleinen Häppchen übertragen werden können.
+(ii) Für eine Festplatte mit Benutzerdateien sollten Interrupts benutzt werden, da dort keine Systemdateien sondern
+     eben nur Benutzerdateien liegen, auf die tendenziell nicht so oft und regelmäßig wie auf Systemdateien zugegriffen
+     wird, weswegen ein Polling unnötig Systemressourcen verschwenden würde. Erneut empfiehlt sich auch ein I/O-Buffer,
+     da so die Daten gesammelt werden, bevor sie am stück verarbeitet werden können.
