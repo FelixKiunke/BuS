@@ -15,4 +15,5 @@ b)
 (ii) Für eine Festplatte mit Benutzerdateien sollten Interrupts benutzt werden, da dort keine Systemdateien sondern
      eben nur Benutzerdateien liegen, auf die tendenziell nicht so oft und regelmäßig wie auf Systemdateien zugegriffen
      wird, weswegen ein Polling unnötig Systemressourcen verschwenden würde. Erneut empfiehlt sich auch ein I/O-Buffer,
-     da so die Daten gesammelt werden, bevor sie am stück verarbeitet werden können.
+     da so die Daten gesammelt werden, bevor sie am stück verarbeitet werden können und zudem ohnehin von einer 
+     Festplatte blockorientiert eingelesen wird.
