@@ -1,0 +1,23 @@
+(i) FCFS
+Zugriffsreihenfolge: 4878, 840, 6888, 5802, 22, 750, 990, 4210, 1
+Gesamtstrecke (in Zylindern): 4+4038+6048+1086+5780+728+240+3220+4209 = 25353
+
+(ii) SSTF
+Zugriffsreihenfolge: 4878, 4210, 5802, 6888, 990, 840, 750, 22, 1
+Gesamtstrecke (in Zylindern): 4+668+1592+1086+5898+150+90+728+21 = 10237
+
+(iii) SCAN
+Zugriffsreihenfolge: 5802, 6888, 4878, 4210, 990, 840, 750, 22, 1
+Gesamtstrecke (in Zylindern): 2117 + 6998 = 9115
+
+(iv) LOOK
+Zugriffsreihenfolge: 5802, 6888, 4878, 4210, 990, 840, 750, 22, 1
+Gesamtstrecke (in Zylindern): 2006 + 6998 = 9004
+
+(v) C-SCAN
+Zugriffsreihenfolge: 5802, 6888, 1, 22, 750, 840, 990, 4210, 4878
+Gesamtstrecke (in Zylindern): 2117 + 6999 + 4878 = 13994
+
+(vi) C-LOOK
+Zugriffsreihenfolge: 5802, 6888, 1, 22, 750, 840, 990, 4210, 4878
+Gesamtstrecke (in Zylindern): 2006 + 6887 + 4877 = 13770
