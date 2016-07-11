@@ -142,7 +142,7 @@ int download_to_file(char* host, char* request, char* file_name) {
     
     // Dies öffnet die Datei zum schreiben!
     filefd = fopen(file_name, "w+");
-    if(file_name == NULL) {
+    if(filefd == NULL) {
         perror("Fehler beim Datei öffnen");
         close(socketfd);
         return -1;
